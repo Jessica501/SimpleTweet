@@ -70,4 +70,61 @@
         android:text="Time"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/ivReply"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginTop="4dp"
+        android:tint="#434A4E"
+        app:layout_constraintStart_toStartOf="@+id/ivMedia"
+        app:layout_constraintTop_toBottomOf="@+id/ivMedia"
+        app:srcCompat="@drawable/ic_outline_chat_bubble_outline_24" />
+
+    <ImageView
+        android:id="@+id/ivRetweet"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginTop="4dp"
+        android:tint="@color/medium_gray_50"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.35"
+        app:layout_constraintStart_toEndOf="@+id/ivReply"
+        app:layout_constraintTop_toBottomOf="@+id/ivMedia"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/ic_vector_retweet_stroke" />
+
+    <ImageView
+        android:id="@+id/ivLike"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginTop="4dp"
+        android:tint="@color/medium_gray_50"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.85"
+        app:layout_constraintStart_toEndOf="@+id/ivReply"
+        app:layout_constraintTop_toBottomOf="@+id/ivMedia"
+        app:srcCompat="@drawable/ic_vector_heart_stroke" />
+
+    <TextView
+        android:id="@+id/tvRetweetCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="Count"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/ivRetweet"
+        app:layout_constraintTop_toTopOf="@+id/ivRetweet" />
+
+    <TextView
+        android:id="@+id/tvFavoriteCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="Count"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/ivLike"
+        app:layout_constraintTop_toTopOf="@+id/ivLike" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

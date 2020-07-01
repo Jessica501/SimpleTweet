@@ -21,6 +21,8 @@ public class Tweet {
     public User user;
     public Entities entities;
     public String relativeTime;
+    public int retweetCount;
+    public int favoriteCount;
 
     // empty constructor needed by Parceler library
     public Tweet() {}
@@ -30,6 +32,8 @@ public class Tweet {
         tweet.body = jsonObject.getString("text");
         tweet.createdAt = jsonObject.getString("created_at");
         tweet.user = User.fromJson(jsonObject.getJSONObject("user"));
+        tweet.retweetCount = jsonObject.getInt("retweet_count");
+        tweet.favoriteCount = jsonObject.getInt("favorite_count");
         tweet.entities = Entities.fromJson(jsonObject.getJSONObject("entities"));
         tweet.relativeTime = getRelativeTimeAgo(tweet.createdAt);
         return tweet;
