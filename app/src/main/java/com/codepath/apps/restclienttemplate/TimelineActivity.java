@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.codepath.apps.restclienttemplate.databinding.ActivityTimelineBinding;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 
@@ -31,24 +32,21 @@ public class TimelineActivity extends AppCompatActivity {
     private final int REQUEST_CODE = 20;
 
     TwitterClient client;
-    RecyclerView rvTweets;
     List<Tweet> tweets;
     TweetsAdapter adapter;
-    SwipeRefreshLayout swipeContainer;
+
+    ActivityTimelineBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_timeline);
+        binding = ActivityTimelineBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
          client = TwitterApp.getRestClient(this);
 
-         // Find the recycler view
-        rvTweets = findViewById(R.id.rvTweets);
-        // Lookup the swipe container view
-        swipeContainer = findViewById(R.id.swipeContainer);
         // Setup refresh listener which triggers new data loading
-        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        binding.swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 fetchTimelineAsync(0);
@@ -56,7 +54,7 @@ public class TimelineActivity extends AppCompatActivity {
         });
 
         // Configure the refreshing colors
-        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+        binding.swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
@@ -67,10 +65,10 @@ public class TimelineActivity extends AppCompatActivity {
         adapter = new TweetsAdapter(this, tweets);
 
         // Recycler view setup: layout manager and adapter
-        rvTweets.setLayoutManager(new LinearLayoutManager(this));
-        rvTweets.setAdapter(adapter);
+        binding.rvTweets.setLayoutManager(new LinearLayoutManager(this));
+        binding.rvTweets.setAdapter(adapter);
 
-        rvTweets.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        binding.rvTweets.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
 
         populateHomeTimeline();
@@ -124,7 +122,7 @@ public class TimelineActivity extends AppCompatActivity {
             tweets.add(0, tweet);
             // update the adapter
             adapter.notifyItemInserted(0);
-            rvTweets.smoothScrollToPosition(0);
+            binding.rvTweets.smoothScrollToPosition(0);
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -143,7 +141,7 @@ public class TimelineActivity extends AppCompatActivity {
                     Log.e(TAG, "Json exception", e);
                 }
                 // call setRefreshing(false) to signal refresh has finished
-                swipeContainer.setRefreshing(false);
+                binding.swipeContainer.setRefreshing(false);
 
             }
 
