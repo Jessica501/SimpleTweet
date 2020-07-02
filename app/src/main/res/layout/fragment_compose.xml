@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp"
+    android:padding="12dp"
     tools:context=".ComposeActivity">
 
     <com.google.android.material.textfield.TextInputLayout
@@ -15,13 +15,12 @@
         app:counterEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/tvReplyTo">
 
         <EditText
             android:id="@+id/etCompose"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
             android:ems="10"
             android:gravity="start|top"
             android:hint="@string/what_s_happening"
@@ -44,4 +43,16 @@
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tilCompose" />
+
+    <TextView
+        android:id="@+id/tvReplyTo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:minLines="0"
+        android:singleLine="false"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintStart_toStartOf="@+id/tilCompose"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="reply to" />
 </androidx.constraintlayout.widget.ConstraintLayout>

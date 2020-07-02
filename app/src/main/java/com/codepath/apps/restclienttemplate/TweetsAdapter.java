@@ -6,8 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -68,6 +71,17 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         public ViewHolder(ItemTweetBinding b) {
             super(b.getRoot());
             binding = b;
+
+            binding.ivReply.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    Tweet replyToTweet = tweets.get(position);
+                    String replyTo = replyToTweet.idString;
+                    String screenName = replyToTweet.user.screenName;
+                    showReplyDialog(replyTo, screenName);
+                }
+            });
         }
 
         public void bind(Tweet tweet) {
@@ -85,6 +99,12 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                         .into(binding.ivMedia);
             }
 
+        }
+
+        private void showReplyDialog(String replyTo, String screenName) {
+            FragmentManager fm = ((AppCompatActivity)context).getSupportFragmentManager();
+            ComposeFragment replyFragment = ComposeFragment.newInstance(replyTo, screenName);
+            replyFragment.show(fm, "fragment_compose");
         }
     }
 }

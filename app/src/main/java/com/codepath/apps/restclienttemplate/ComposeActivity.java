@@ -53,7 +53,7 @@ public class ComposeActivity extends AppCompatActivity {
                 }
                 Toast.makeText(ComposeActivity.this, tweetContent, Toast.LENGTH_LONG).show();
                 // make an API call to twitter to publish the tweet
-                client.publishTweet(tweetContent, new JsonHttpResponseHandler() {
+                client.publishTweet(tweetContent, "",  new JsonHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, Headers headers, JSON json) {
                         Log.i(TAG, "onSuccess to publish tweet");

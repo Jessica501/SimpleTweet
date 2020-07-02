@@ -76,10 +76,10 @@
         android:layout_width="16dp"
         android:layout_height="16dp"
         android:layout_marginTop="4dp"
-        android:tint="#434A4E"
+        android:tint="@color/medium_gray_50"
         app:layout_constraintStart_toStartOf="@+id/ivMedia"
         app:layout_constraintTop_toBottomOf="@+id/ivMedia"
-        app:srcCompat="@drawable/ic_outline_chat_bubble_outline_24" />
+        app:srcCompat="@drawable/ic_vector_reply" />
 
     <ImageView
         android:id="@+id/ivRetweet"

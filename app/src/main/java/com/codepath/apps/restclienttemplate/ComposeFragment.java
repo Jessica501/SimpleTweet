@@ -28,6 +28,7 @@ import org.parceler.Parcels;
 import okhttp3.Headers;
 
 import static android.app.Activity.RESULT_OK;
+import static android.view.View.GONE;
 
 public class ComposeFragment extends DialogFragment{
     FragmentComposeBinding binding;
@@ -37,7 +38,9 @@ public class ComposeFragment extends DialogFragment{
 
     TwitterClient client;
 
-
+    boolean reply;
+    String replyTo;
+    String replyToScreenName;
 
     // empty constructor required for DialogFragment
     public ComposeFragment() {
@@ -47,10 +50,11 @@ public class ComposeFragment extends DialogFragment{
         void onFinishCompose(int resultCode, Parcelable parcelable);
     }
 
-    public static ComposeFragment newInstance(String title) {
+    public static ComposeFragment newInstance(String replyTo, String screenName) {
         ComposeFragment frag = new ComposeFragment();
         Bundle args = new Bundle();
-        args.putString("title", title);
+        args.putString("replyTo", replyTo);
+        args.putString("screenName", screenName);
         frag.setArguments(args);
         return frag;
     }
@@ -76,13 +80,28 @@ public class ComposeFragment extends DialogFragment{
 
         client = TwitterApp.getRestClient(getContext());
 
-        binding.tilCompose.setCounterMaxLength(MAX_TWEET_LENGTH);
+        replyTo = this.getArguments().getString("replyTo");
+        replyToScreenName = this.getArguments().getString("screenName");
+        reply = replyTo.length() > 0;
+
+        if (reply) {
+            binding.tilCompose.setCounterMaxLength(MAX_TWEET_LENGTH-replyToScreenName.length()-2);
+            binding.tvReplyTo.setText("replying to @"+replyToScreenName);
+        }
+        else {
+            binding.tilCompose.setCounterMaxLength(MAX_TWEET_LENGTH);
+            binding.tvReplyTo.setVisibility(GONE);
+
+        }
 
         // set a click listener on button
         binding.btnTweet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String tweetContent = binding.etCompose.getText().toString();
+                if (reply) {
+                    tweetContent = "@"+replyToScreenName+ " " + tweetContent;
+                }
                 if (tweetContent.isEmpty()) {
                     Toast.makeText(getContext(), "Sorry, your tweet cannot be empty", Toast.LENGTH_LONG).show();
                     return;
@@ -93,7 +112,7 @@ public class ComposeFragment extends DialogFragment{
                 }
                 Toast.makeText(getContext(), tweetContent, Toast.LENGTH_LONG).show();
                 // make an API call to twitter to publish the tweet
-                client.publishTweet(tweetContent, new JsonHttpResponseHandler() {
+                client.publishTweet(tweetContent, replyTo, new JsonHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, Headers headers, JSON json) {
                         Log.i(TAG, "onSuccess to publish tweet");
