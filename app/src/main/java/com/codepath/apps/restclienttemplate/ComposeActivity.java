@@ -20,6 +20,7 @@ import org.parceler.Parcels;
 
 import okhttp3.Headers;
 
+// this class is obsolete
 public class ComposeActivity extends AppCompatActivity {
     public static final int MAX_TWEET_LENGTH = 280;
     public static final String TAG = "ComposeActivity";

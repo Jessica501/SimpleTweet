@@ -2,6 +2,7 @@ package com.codepath.apps.restclienttemplate;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -9,6 +10,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,7 +29,7 @@ import java.util.List;
 
 import okhttp3.Headers;
 
-public class TimelineActivity extends AppCompatActivity {
+public class TimelineActivity extends AppCompatActivity implements ComposeFragment.ComposeListener {
     public static final String TAG = "TimelineActivity";
     private final int REQUEST_CODE = 20;
 
@@ -104,14 +106,14 @@ public class TimelineActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.compose) {
-            // navigate to the compose activity
-            Intent intent = new Intent(this, ComposeActivity.class);
-            startActivityForResult(intent, REQUEST_CODE);
+            showComposeDialog();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
+
+    // obsolete
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
@@ -151,5 +153,25 @@ public class TimelineActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void showComposeDialog() {
+        FragmentManager fm = getSupportFragmentManager();
+        ComposeFragment composeFragment = ComposeFragment.newInstance("Asdf title");
+        composeFragment.show(fm, "fragment_compose");
+    }
+
+    @Override
+    public void onFinishCompose(int resultCode, Parcelable parcelable) {
+        if (resultCode == RESULT_OK) {
+            // get data from the intent (tweet)
+            Tweet tweet = Parcels.unwrap(parcelable);
+            // update the RV with the tweet
+            // modify data source of tweets
+            tweets.add(0, tweet);
+            // update the adapter
+            adapter.notifyItemInserted(0);
+            binding.rvTweets.smoothScrollToPosition(0);
+        }
     }
 }
