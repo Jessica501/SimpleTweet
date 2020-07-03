@@ -22,6 +22,7 @@ import com.codepath.apps.restclienttemplate.databinding.FragmentComposeBinding;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 
+import org.apache.commons.codec.binary.StringUtils;
 import org.json.JSONException;
 import org.parceler.Parcels;
 
@@ -33,7 +34,7 @@ import static android.view.View.GONE;
 public class ComposeFragment extends DialogFragment{
     FragmentComposeBinding binding;
 
-    public static final int MAX_TWEET_LENGTH = 280;
+    private static final int MAX_TWEET_LENGTH = 280;
     public static final String TAG = "ComposeFragment";
 
     TwitterClient client;
@@ -102,7 +103,7 @@ public class ComposeFragment extends DialogFragment{
                 if (reply) {
                     tweetContent = "@"+replyToScreenName+ " " + tweetContent;
                 }
-                if (tweetContent.isEmpty()) {
+                if (tweetContent.trim().isEmpty()) {
                     Toast.makeText(getContext(), "Sorry, your tweet cannot be empty", Toast.LENGTH_LONG).show();
                     return;
                 }

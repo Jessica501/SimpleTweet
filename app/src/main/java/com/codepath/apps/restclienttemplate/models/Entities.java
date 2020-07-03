@@ -16,9 +16,7 @@ public class Entities {
     public static Entities fromJson(JSONObject jsonObject) throws JSONException {
         Entities entities = new Entities();
 
-        entities.mediaUrl = null;
-
-        if (jsonObject.has("media")) {
+        if (!jsonObject.isNull("media")) {
             JSONArray media = jsonObject.getJSONArray("media");
             entities.mediaUrl = ((JSONObject)media.get(0)).getString("media_url_https");
 

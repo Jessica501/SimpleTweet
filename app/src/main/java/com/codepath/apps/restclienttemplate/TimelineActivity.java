@@ -31,7 +31,7 @@ import okhttp3.Headers;
 
 public class TimelineActivity extends AppCompatActivity implements ComposeFragment.ComposeListener {
     public static final String TAG = "TimelineActivity";
-    private final int REQUEST_CODE = 20;
+    public static final int REQUEST_CODE = 20;
 
     TwitterClient client;
     List<Tweet> tweets;
@@ -51,7 +51,7 @@ public class TimelineActivity extends AppCompatActivity implements ComposeFragme
         binding.swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                fetchTimelineAsync(0);
+                fetchTimelineAsync();
             }
         });
 
@@ -129,7 +129,7 @@ public class TimelineActivity extends AppCompatActivity implements ComposeFragme
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    public void fetchTimelineAsync(int page) {
+    public void fetchTimelineAsync() {
         // Send the network request to fetch the updated data
         client.getHomeTimeline(new JsonHttpResponseHandler() {
             @Override

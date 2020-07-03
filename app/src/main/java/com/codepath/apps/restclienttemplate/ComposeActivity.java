@@ -43,7 +43,7 @@ public class ComposeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String tweetContent = binding.etCompose.getText().toString();
-                if (tweetContent.isEmpty()) {
+                if (tweetContent.trim().isEmpty()) {
                     Toast.makeText(ComposeActivity.this, "Sorry, your tweet cannot be empty", Toast.LENGTH_LONG).show();
                     return;
                 }
