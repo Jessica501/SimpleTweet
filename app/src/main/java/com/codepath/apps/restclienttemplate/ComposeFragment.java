@@ -124,6 +124,7 @@ public class ComposeFragment extends DialogFragment{
                             dismiss();
 
                         } catch (JSONException e) {
+                            Log.e("ComposeFragment", "onFailure to publish tweet", e);
                             e.printStackTrace();
                         }
                     }

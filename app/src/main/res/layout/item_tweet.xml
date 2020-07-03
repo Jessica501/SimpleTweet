@@ -77,7 +77,7 @@
         android:layout_height="16dp"
         android:layout_marginTop="4dp"
         android:tint="@color/medium_gray_50"
-        app:layout_constraintStart_toStartOf="@+id/ivMedia"
+        app:layout_constraintStart_toStartOf="@+id/tvBody"
         app:layout_constraintTop_toBottomOf="@+id/ivMedia"
         app:srcCompat="@drawable/ic_vector_reply" />
 

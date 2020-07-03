@@ -20,6 +20,8 @@ import com.codepath.apps.restclienttemplate.models.Tweet;
 
 import java.util.List;
 
+import static android.view.View.GONE;
+
 public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder>{
 
     Context context;
@@ -97,6 +99,9 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                         .with(context)
                         .load(tweet.entities.mediaUrl)
                         .into(binding.ivMedia);
+            }
+            else {
+                binding.ivMedia.setVisibility(GONE);
             }
 
         }
